@@ -21,11 +21,7 @@ class Discretization(object):
         self.size = size
 
     def residual(self, u, parameters, integrconst):
-        # modification: isCM flag for Coifman-Meyer nonlinearity
-        if self.equation.isCM == True:
-            residual = self.apply_operator(u) - parameters[0]*u + self.equation.flux(u)*self.nonlin_operator(u) - integrconst
-        else:
-            residual = self.apply_operator(u) - parameters[0]*u + self.equation.flux(u) - integrconst
+        residual = self.apply_operator(u) - parameters[0]*u + self.equation.flux(u) - integrconst
         return  residual
 
     def frequencies(self):
@@ -33,10 +29,6 @@ class Discretization(object):
 
     def image(self):
         return self.equation.compute_kernel(self.frequencies())
-    
-    def image_nlp(self):
-        # same as image(self), but for the nonlinear part
-        return self.equation.nonlinear_kernel(self.frequencies())
 
     def bifurcation_velocity(self):
         return self.image()[1] # check this
@@ -59,13 +51,6 @@ class Discretization(object):
     def apply_operator(self, u):
         u_ = scipy.fftpack.dct(u, norm='ortho')
         Lv = self.image() * u_
-        result = scipy.fftpack.idct(Lv, norm='ortho')
-        return result
-    
-    def nonlin_operator(self,u):
-        # computes Lambda^r u
-        u_ = scipy.fftpack.dct(u, norm='ortho')
-        Lv = self.image_nlp() * u_ 
         result = scipy.fftpack.idct(Lv, norm='ortho')
         return result
 

@@ -19,9 +19,6 @@ class Whitham(Equation):
 
     def flux_prime(self, u):
         return 1.5*u
-    
-    def nonlinear_kernel(self, k):
-        return 0
 
 class Whitham_scaled(Whitham):
     def compute_kernel(self,k):

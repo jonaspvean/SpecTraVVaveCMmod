@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: travwave
+Version: 0.0.0
+Summary: Compute traveling waves
+Author: Daulet Moldabayev, Henrik Kalisch, Olivier Verdier
+License: MIT
+Keywords: Math
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+License-File: LICENSE.md

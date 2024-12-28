@@ -55,7 +55,5 @@ class Solver(object):
         computed = nsolver.run(guess)
         wave, variables, extent = self.destruct(computed)
         new_parameter = compute_parameter(parameter_anchor, direction, extent)
-        
-        lambda_r = self.discretization.nonlin_operator(wave)[0]
-        
-        return wave, variables, new_parameter, lambda_r
+
+        return wave, variables, new_parameter

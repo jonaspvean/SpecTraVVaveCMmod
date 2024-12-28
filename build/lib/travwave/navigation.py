@@ -39,9 +39,7 @@ class Navigator(object):
         """
         self._stored_values = []
         variables = [0]
-        max_value = 0
-        lambda_r = 0
-        self._stored_values.append({'solution': resample(current, self.size), 'maximum': max_value, 'lambda_r': lambda_r, 'integration constant': variables, 'parameter': p, 'base': base})
+        self._stored_values.append({'solution': resample(current, self.size), 'integration constant': variables, 'parameter': p, 'base': base})
 
     def compute_direction(self, p1, p2):
         """
@@ -62,16 +60,16 @@ class Navigator(object):
         return p2, p1
 
     def run_solver(self, current, pstar, direction):
-        new, variables, p3, lambda_r = self.solve(current, pstar, direction)
-        return new, variables, p3, lambda_r 
+        new, variables, p3 = self.solve(current, pstar, direction)
+        return new, variables, p3
 
     def refine(self, resampling, sol, p, direction):
         """
         Refine from solution `sol` at parameter `p` in direction `direction` in the parameter space.
         """
         sol_ = resample(sol, resampling)
-        new, variables, p_, lambda_r = self.run_solver(sol_, p, direction)
-        return new, variables, p_, lambda_r
+        new, variables, p_ = self.run_solver(sol_, p, direction)
+        return new, variables, p_
 
     def refine_at(self, resampling, index=-1):
         """
@@ -87,9 +85,8 @@ class Navigator(object):
         base = self[-1]['base']
         direction = self.compute_direction(p, base)
         current = self[-1]['solution']
-        new, variables, p_, lambda_r = self.run_solver(current, base, direction)
-        max_value = max(new)
+        new, variables, p_ = self.run_solver(current, base, direction)
         dp = (p_[0] - p[0], p_[1] - p[1])
         pstar = (p_[0] + dp[0], p_[1] + dp[1])
-        self._stored_values.append({'solution': new, 'maximum': max_value, 'lambda_r': lambda_r, 'integration constant': variables, 'parameter': p_, 'base': pstar})
+        self._stored_values.append({'solution': new, 'integration constant': variables, 'parameter': p_, 'base': pstar})
 
