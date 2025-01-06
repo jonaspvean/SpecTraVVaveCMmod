@@ -13,5 +13,5 @@ class fKdV(Equation):
     def flux(self, u):
         return 0.5*u*u
     
-    def nonlin_kernel(self, k):
+    def nonlinear_kernel(self, k):
         return 0
